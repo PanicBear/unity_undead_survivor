@@ -82,4 +82,5 @@ crashlytics-build.properties
 Assets/Undead Survivor/*
 !Assets/Undead Survivor/Scripts/
 !Assets/Undead Survivor/Sprites/
+!*.inputactions
 

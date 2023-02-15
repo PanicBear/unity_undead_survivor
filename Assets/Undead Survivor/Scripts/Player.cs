@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -17,16 +18,16 @@ public class Player : MonoBehaviour
   }
 
   // Update is called once per frame
-  void Update()
-  {
-    // inputVec.x = Input.GetAxis("Horizontal");   
-    // inputVec.y = Input.GetAxis("Vertical");   
+  // void Update()
+  // {
+  //   // inputVec.x = Input.GetAxis("Horizontal");   
+  //   // inputVec.y = Input.GetAxis("Vertical");   
 
 
-    // GetAxisRaw: Returns the value of the virtual axis identified by axisName with no smoothing filtering applied.
-    inputVec.x = Input.GetAxisRaw("Horizontal");
-    inputVec.y = Input.GetAxisRaw("Vertical");
-  }
+  //   // GetAxisRaw: Returns the value of the virtual axis identified by axisName with no smoothing filtering applied.
+  //   // inputVec.x = Input.GetAxisRaw("Horizontal");
+  //   // inputVec.y = Input.GetAxisRaw("Vertical");
+  // }
 
   // 물리 연산 프레임마다 호출
   void FixedUpdate()
@@ -40,9 +41,17 @@ public class Player : MonoBehaviour
     // 3. 위치를 통한 구현
     // rigid.MovePosition(rigid.position + inputVec);
 
-    // normalized: Returns this vector with a magnitude of 1 (Read Only).
+    // normalized: Returns this vector with a magnitude of 1 (Read Only). removed: already set up in input system package setup
     // fixedDeltaTime: The interval in seconds at which physics and other fixed frame rate updates (like MonoBehaviour's MonoBehaviour.FixedUpdate) are performed.
-    Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+    Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
     rigid.MovePosition(rigid.position + nextVec);
+  }
+
+  // input system with 'input systen' package installed from package manager
+  void OnMove(InputValue value)
+  {
+    inputVec = value.Get<Vector2>();
+    rigid.MovePosition(rigid.position + inputVec);
+
   }
 }
