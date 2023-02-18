@@ -10,23 +10,25 @@ public class Player : MonoBehaviour
   public float speed;
 
   Rigidbody2D rigid;
+  SpriteRenderer spriter;
 
   // 초기화용 함수(1회 실행)
   void Awake()
   {
     rigid = GetComponent<Rigidbody2D>();
+    spriter = GetComponent<SpriteRenderer>();
   }
 
   // Update is called once per frame
   // void Update()
   // {
-  //   // inputVec.x = Input.GetAxis("Horizontal");   
-  //   // inputVec.y = Input.GetAxis("Vertical");   
+  //   inputVec.x = Input.GetAxis("Horizontal");   
+  //   inputVec.y = Input.GetAxis("Vertical");   
 
 
-  //   // GetAxisRaw: Returns the value of the virtual axis identified by axisName with no smoothing filtering applied.
-  //   // inputVec.x = Input.GetAxisRaw("Horizontal");
-  //   // inputVec.y = Input.GetAxisRaw("Vertical");
+  //   GetAxisRaw: Returns the value of the virtual axis identified by axisName with no smoothing filtering applied.
+  //   inputVec.x = Input.GetAxisRaw("Horizontal");
+  //   inputVec.y = Input.GetAxisRaw("Vertical");
   // }
 
   // 물리 연산 프레임마다 호출
@@ -53,5 +55,14 @@ public class Player : MonoBehaviour
     inputVec = value.Get<Vector2>();
     rigid.MovePosition(rigid.position + inputVec);
 
+  }
+
+  // LateUpdate is called once per frame, after Update has finished. Any calculations that are performed in Update will have completed when LateUpdate begins.
+  void LateUpdate()
+  {
+    if (inputVec.x != 0 && spriter != null)
+    {
+      spriter.flipX = inputVec.x < 0;
+    }
   }
 }
