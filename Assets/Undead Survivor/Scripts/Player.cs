@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
 
   Rigidbody2D rigid;
   SpriteRenderer spriter;
+  Animator anim;
 
   // 초기화용 함수(1회 실행)
   void Awake()
   {
     rigid = GetComponent<Rigidbody2D>();
     spriter = GetComponent<SpriteRenderer>();
+    anim = GetComponent<Animator>();
   }
 
   // Update is called once per frame
@@ -60,6 +62,9 @@ public class Player : MonoBehaviour
   // LateUpdate is called once per frame, after Update has finished. Any calculations that are performed in Update will have completed when LateUpdate begins.
   void LateUpdate()
   {
+    // pure lenght of vector(without sign)
+    anim.SetFloat("Speed", inputVec.magnitude);
+
     if (inputVec.x != 0 && spriter != null)
     {
       spriter.flipX = inputVec.x < 0;
